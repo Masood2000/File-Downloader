@@ -15,10 +15,11 @@ public class FileMetadata {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestMethod("HEAD");
-        //connection.connect();
+        connection.connect();
 
         String acceptRanges = connection.getHeaderField("Accept-Ranges");
         long contentLength = connection.getHeaderFieldLong("Content-Length", -1);
+
 
         System.out.println("Accept-Ranges: " + acceptRanges);
         System.out.println("Content-Length: " + contentLength);
@@ -33,6 +34,7 @@ public class FileMetadata {
 
         connection.disconnect();
 
-        return contentLength;
+        System.out.println("testing:" + contentLength);
+        return -1;
     }
 }

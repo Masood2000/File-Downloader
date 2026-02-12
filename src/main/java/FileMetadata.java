@@ -15,7 +15,7 @@ public class FileMetadata {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestMethod("HEAD");
-        connection.connect();
+        //connection.connect();
 
         String acceptRanges = connection.getHeaderField("Accept-Ranges");
         long contentLength = connection.getHeaderFieldLong("Content-Length", -1);

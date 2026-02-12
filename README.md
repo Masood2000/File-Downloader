@@ -84,7 +84,7 @@ Significantly improved performance
 
 ------------------------------------------------------------------------
 
-###  Modern Concurrency: Kotlin Coroutines
+###  Kotlin Coroutines
 
 `ParallelFileDownloader.kt` (class: `ParallelDownloaderCoroutines`)
 

@@ -35,6 +35,6 @@ public class FileMetadata {
         connection.disconnect();
 
         System.out.println("testing:" + contentLength);
-        return -1;
+        return contentLength;
     }
 }

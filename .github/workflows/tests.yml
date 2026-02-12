@@ -28,12 +28,12 @@ jobs:
           # Create a directory to serve files from
           mkdir server_root
           
-          # Create the file your test expects (file.exe) 
+          # Create the file your test expects (my-local-file.txt) 
           # We make it exactly 1024 bytes for predictable testing
-          head -c 1024 /dev/zero > server_root/file.exe
+          head -c 1024 /dev/zero > server_root/my-local-file.txt
           
           # Start a background Python server on port 8080
-          # This allows your Java code to connect to http://localhost:8080/file.exe
+          # This allows your Java code to connect to http://localhost:8080/my-local-file.txt
           cd server_root && python3 -m http.server 8080 &
           
           # Give the server 3 seconds to fully initialize

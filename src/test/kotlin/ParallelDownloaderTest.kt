@@ -156,6 +156,7 @@ class ParallelDownloaderTest {
         assertTrue(File(file1).exists(), "First file should exist")
         assertTrue(File(file2).exists(), "Second file should exist")
 
+
         assertTrue(File(file1).length() > 0, "file1 should have content")
         assertTrue(File(file2).length() > 0, "file2 file should have content")
 

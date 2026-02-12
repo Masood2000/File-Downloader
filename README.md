@@ -8,6 +8,7 @@ a simple sequential downloader to parallel solution.
 
 ------------------------------------------------------------------------
 
+
 ##  Development
 
 This project was built iteratively to explore efficient ways to handle

@@ -21,9 +21,9 @@ class SimpleDownloaderTest {
     fun testDownloadSuccess() {
 
         val downloader = SimpleDownloader()
-        val outputPath = tempDir.resolve("downloaded.exe").toString()
+        val outputPath = tempDir.resolve("downloaded.txt").toString()
 
-        downloader.downloadFile("http://localhost:8080/file.exe", outputPath)
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", outputPath)
 
         val file = File(outputPath)
         assertTrue(file.exists(), "File should be created")
@@ -35,12 +35,12 @@ class SimpleDownloaderTest {
     @Test
     fun testFileContent() {
         val downloader = SimpleDownloader()
-        val output1 = tempDir.resolve("file1.exe").toString()
-        val output2 = tempDir.resolve("file2.exe").toString()
+        val output1 = tempDir.resolve("file1.txt").toString()
+        val output2 = tempDir.resolve("file2.txt").toString()
 
         // Download same file twice
-        downloader.downloadFile("http://localhost:8080/file.exe", output1)
-        downloader.downloadFile("http://localhost:8080/file.exe", output2)
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", output1)
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", output2)
 
         // Files should be identical (same content)
         val file1 = File(output1)
@@ -54,9 +54,9 @@ class SimpleDownloaderTest {
     @Test
     fun testBufferReading() {
         val downloader = SimpleDownloader()
-        val outputPath = tempDir.resolve("test.exe").toString()
+        val outputPath = tempDir.resolve("test.txt").toString()
 
-        downloader.downloadFile("http://localhost:8080/file.exe", outputPath)
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", outputPath)
 
         val file = File(outputPath)
 
@@ -69,10 +69,10 @@ class SimpleDownloaderTest {
     @Test
     fun testNon200Response() {
         val downloader = SimpleDownloader()
-        val outputPath = tempDir.resolve("notfound.exe").toString()
+        val outputPath = tempDir.resolve("notfound.txt").toString()
 
         // Try to download file that doesn't exist (should get 404)
-        downloader.downloadFile("http://localhost:8080/doesnotexist.exe", outputPath)
+        downloader.downloadFile("http://localhost:8080/doesnotexist.txt", outputPath)
 
         val file = File(outputPath)
         assertFalse(file.exists(), "File should not be created for non-200 response")
@@ -83,14 +83,14 @@ class SimpleDownloaderTest {
     @Test
     fun testConnectionCleanup() {
         val downloader = SimpleDownloader()
-        val outputPath = tempDir.resolve("test.exe").toString()
+        val outputPath = tempDir.resolve("test.txt").toString()
 
         // Download file - connection should disconnect after
-        downloader.downloadFile("http://localhost:8080/file.exe", outputPath)
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", outputPath)
 
         // If we can download again, connection cleanup worked
-        val outputPath2 = tempDir.resolve("test2.exe").toString()
-        downloader.downloadFile("http://localhost:8080/file.exe", outputPath2)
+        val outputPath2 = tempDir.resolve("test2.txt").toString()
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", outputPath2)
 
         assertTrue(File(outputPath).exists(), "First download should succeed")
         assertTrue(File(outputPath2).exists(), "Second download should succeed")
@@ -101,9 +101,9 @@ class SimpleDownloaderTest {
     @Test
     fun testStreamsClose() {
         val downloader = SimpleDownloader()
-        val outputPath = tempDir.resolve("test.exe").toString()
+        val outputPath = tempDir.resolve("test.txt").toString()
 
-        downloader.downloadFile("http://localhost:8080/file.exe", outputPath)
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", outputPath)
 
         val file = File(outputPath)
 
@@ -118,7 +118,7 @@ class SimpleDownloaderTest {
     @Test
     fun testInvalidUrl() {
         val downloader = SimpleDownloader()
-        val outputPath = tempDir.resolve("output.exe").toString()
+        val outputPath = tempDir.resolve("output.txt").toString()
 
         try {
             downloader.downloadFile("not-a-url", outputPath)
@@ -134,13 +134,13 @@ class SimpleDownloaderTest {
     fun testMultipleDownloads() {
         val downloader = SimpleDownloader()
 
-        val file1 = tempDir.resolve("file1.exe").toString()
-        val file2 = tempDir.resolve("file2.exe").toString()
-        val file3 = tempDir.resolve("file3.exe").toString()
+        val file1 = tempDir.resolve("file1.txt").toString()
+        val file2 = tempDir.resolve("file2.txt").toString()
+        val file3 = tempDir.resolve("file3.txt").toString()
 
-        downloader.downloadFile("http://localhost:8080/file.exe", file1)
-        downloader.downloadFile("http://localhost:8080/file.exe", file2)
-        downloader.downloadFile("http://localhost:8080/file.exe", file3)
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", file1)
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", file2)
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", file3)
 
         assertTrue(File(file1).exists(), "File 1 should exist")
         assertTrue(File(file2).exists(), "File 2 should exist")
@@ -153,15 +153,15 @@ class SimpleDownloaderTest {
     fun testDifferentPaths() {
         val downloader = SimpleDownloader()
 
-        val path1 = tempDir.resolve("test1.exe").toString()
+        val path1 = tempDir.resolve("test1.txt").toString()
         val path2 = tempDir.resolve("subfolder").toString()
 
         // Create subfolder
         File(path2).mkdirs()
-        val path2File = "$path2/test2.exe"
+        val path2File = "$path2/test2.txt"
 
-        downloader.downloadFile("http://localhost:8080/file.exe", path1)
-        downloader.downloadFile("http://localhost:8080/file.exe", path2File)
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", path1)
+        downloader.downloadFile("http://localhost:8080/my-local-file.txt", path2File)
 
         assertTrue(File(path1).exists(), "File in root should exist")
         assertTrue(File(path2File).exists(), "File in subfolder should exist")

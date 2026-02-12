@@ -15,9 +15,10 @@ class FileMetadataTest {
     // If method returns positive number, both headers were read successfully
     @Test
     fun testHeadersReadCorrectly() {
+
         val fileMetadata = FileMetadata()
 
-        val fileSize = fileMetadata.getMetaData("http://localhost:8080/file.exe")
+        val fileSize = fileMetadata.getMetaData("http://localhost:8080/my-local-file.txt")
 
         assertTrue(fileSize > 0, "Headers should be read correctly")
         println("Accept-Ranges and Content-Length read successfully")
@@ -29,8 +30,8 @@ class FileMetadataTest {
 
         val fileMetadata = FileMetadata()
 
-        val size1 = fileMetadata.getMetaData("http://localhost:8080/file.exe")
-        val size2 = fileMetadata.getMetaData("http://localhost:8080/file.exe")
+        val size1 = fileMetadata.getMetaData("http://localhost:8080/my-local-file.txt")
+        val size2 = fileMetadata.getMetaData("http://localhost:8080/my-local-file.txt")
 
         // Content-Length should be same every time
         assertEquals(size1, size2, "Content-Length should be consistent")
@@ -43,7 +44,7 @@ class FileMetadataTest {
     fun testFileSizeValue() {
         val fileMetadata = FileMetadata()
 
-        val fileSize = fileMetadata.getMetaData("http://localhost:8080/file.exe")
+        val fileSize = fileMetadata.getMetaData("http://localhost:8080/my-local-file.txt")
 
         // File size should be reasonable (not 0, not negative, not too big (for now))
         assertTrue(fileSize > 0, "File size should be positive")

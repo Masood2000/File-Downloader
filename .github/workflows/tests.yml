@@ -1,17 +1,15 @@
-name: Java CI, Test & Release
+name: Java CI with Local Server
 
 on:
   push:
     branches: [ "main", "master" ]
-    tags: [ "v*" ]  # Release job triggers only on tags
   pull_request:
     branches: [ "main", "master" ]
 
 jobs:
-  build-and-test:
+  build-test-and-jar:
     runs-on: ubuntu-latest
-    outputs:
-      jar-path: ${{ steps.upload_jar.outputs.artifact-path }}
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -35,6 +33,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      # --- Run Tests ---
       - name: Run Tests
         run: ./gradlew test
 
@@ -45,44 +44,12 @@ jobs:
           name: junit-test-results
           path: build/reports/tests/test
 
+      # --- Build Fat JAR (Shadow) ---
       - name: Build Fat JAR
         run: ./gradlew clean shadowJar
 
-      - name: Upload Fat JAR Artifact
-        id: upload_jar
+      - name: Upload Fat JAR
         uses: actions/upload-artifact@v4
         with:
           name: parallel-downloader-jar
           path: build/libs/*-all.jar
-
-  release:
-    if: startsWith(github.ref, 'refs/tags/')
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Fat JAR from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: parallel-downloader-jar
-          path: ./build/libs
-
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Fat JAR to Release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/libs/*-all.jar
-          asset_name: parallel-downloader-${{ github.ref_name }}.jar
-          asset_content_type: application/java-archive
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

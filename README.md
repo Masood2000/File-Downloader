@@ -20,6 +20,13 @@ You can customize:
 2. The **downloader type** (`simple`, `seek`, `merge`, `coroutines`)
 
 ---
+------------------------------------------------------------------------
+
+##  Prerequisites
+
+- **JDK:** 17
+- **Kotlin:** 1.9+
+- **Gradle:** 8.4+
 
 ### ▶ Using Gradle
 ```
@@ -110,13 +117,7 @@ The core logic relies on **HTTP Range Requests**.
 4.  **Assembly** → Chunks are written directly into the final file using
     `RandomAccessFile`
 
-------------------------------------------------------------------------
 
-##  Prerequisites
-
-- **JDK:** 17
-- **Kotlin:** 1.9+
-- **Gradle:** 8.4+ 
 
 ------------------------------------------------------------------------
 

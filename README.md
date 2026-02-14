@@ -22,11 +22,32 @@ You can customize:
 ---
 ------------------------------------------------------------------------
 
-##  Prerequisites
+##  Prerequisites & Environment Setup
 
 - **JDK:** 17
 - **Kotlin:** 1.9+
 - **Gradle:** 8.4+
+
+### 1. Check Your Java Version
+
+Before running the project, ensure you are using a compatible Java version.  
+Open your terminal and run:
+
+```bash
+java -version
+
+```
+If the output shows a version newer than JDK 17 (e.g., Java 25), you may encounter build failures (Error: 25).
+
+
+```
+# Point this path to your JDK 17 or 21 installation
+$env:JAVA_HOME = "C:\Program Files\Java\jdk-17"
+$env:Path = "$env:JAVA_HOME\bin;$env:Path"
+
+# Verify the change
+java -version
+```
 
 ### ▶ Using Gradle
 ```

@@ -41,7 +41,7 @@ If the output shows a version newer than JDK 17 (e.g., Java 25), you may encount
 
 
 ```
-# Point this path to your JDK 17 or 21 installation
+# Point this path to your JDK 17 installation
 $env:JAVA_HOME = "C:\Program Files\Java\jdk-17"
 $env:Path = "$env:JAVA_HOME\bin;$env:Path"
 

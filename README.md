@@ -49,6 +49,24 @@ $env:Path = "$env:JAVA_HOME\bin;$env:Path"
 java -version
 ```
 
+
+
+------------------------------------------------------------------------
+
+##  Setting Up a Local Test Server
+
+To simulate downloads locally using Apache HTTPD:
+
+``` bash
+# Serve files from current directory at http://localhost:8080
+docker run --rm -p 8080:80 -v $(pwd):/usr/local/apache2/htdocs/ httpd:latest
+```
+
+Ensure you place a dummy file (e.g., `my-local-file.txt`) in the mapped
+directory.
+
+---------------------------------------------------------------------
+
 ### ▶ Using Gradle
 ```
 ./gradlew run --args="D:/path/to/output seek"
@@ -139,20 +157,6 @@ The core logic relies on **HTTP Range Requests**.
     `RandomAccessFile`
 
 
-
-------------------------------------------------------------------------
-
-##  Setting Up a Local Test Server
-
-To simulate downloads locally using Apache HTTPD:
-
-``` bash
-# Serve files from current directory at http://localhost:8080
-docker run --rm -p 8080:80 -v $(pwd):/usr/local/apache2/htdocs/ httpd:latest
-```
-
-Ensure you place a dummy file (e.g., `my-local-file.txt`) in the mapped
-directory.
 
 ------------------------------------------------------------------------
 
